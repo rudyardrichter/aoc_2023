@@ -1,0 +1,7 @@
+[project]
+name = "aoc_2023"
+version = "0.0.0"
+dependencies = ["advent-of-code-data"]
+
+[project.optional-dependencies]
+lint = ["shed", "isort", "black"]
