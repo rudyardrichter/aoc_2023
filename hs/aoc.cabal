@@ -1,0 +1,25 @@
+cabal-version:      3.8
+name:               Aoc2023
+version:            0.0.0.0
+
+library
+    exposed-modules:
+        Day01
+    build-depends:
+        base ^>= 4.19.0.0
+      , megaparsec ^>=9.6.1
+      , text ^>= 2.1
+    hs-source-dirs: src
+    default-language: GHC2021
+    default-extensions: OverloadedStrings
+
+executable Aoc2023-main
+    main-is:          Main.hs
+    build-depends:
+        Aoc2023
+      , base ^>= 4.19.0.0
+      , text ^>= 2.1
+    hs-source-dirs:   app
+    default-language: GHC2021
+    default-extensions: OverloadedStrings
+    ghc-options: -threaded
