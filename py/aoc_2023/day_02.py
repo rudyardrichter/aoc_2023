@@ -1,6 +1,10 @@
+import sys
 from dataclasses import dataclass
 
-from aocd import get_data
+from aocd import get_data, submit
+
+YEAR = 2023
+DAY = 2
 
 
 @dataclass
@@ -62,4 +66,13 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) > 1 and sys.argv[1] == "1":
+        answer = part_1(preprocess(get_data(day=DAY, year=YEAR)))
+        print(f"SUBMITTING ANSWER 1: {answer}")
+        submit(answer, part="a", day=2, year=2023)  # type: ignore
+    elif len(sys.argv) > 1 and sys.argv[1] == "2":
+        answer = part_2(preprocess(get_data(day=DAY, year=YEAR)))
+        print(f"SUBMITTING ANSWER 2: {answer}")
+        submit(answer, part="b", day=2, year=2023)  # type: ignore
+    else:
+        main()
