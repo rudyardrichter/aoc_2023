@@ -1,6 +1,6 @@
 use std::ops::Div;
 
-use crate::binary_search::binary_search;
+use crate::search;
 
 pub struct Part1 {
     times: Vec<u32>,
@@ -58,8 +58,7 @@ fn ways_to_win(t: u32, d: u32) -> u32 {
     let lo_0 = 0;
     let hi_0 = t.div_ceil(2);
     let wins = |hold: &u32| hold * (t - hold) > d;
-    let step = |lo: &u32, hi: &u32| (*hi - 1 > *lo).then(|| (lo + hi).div_ceil(2));
-    let (_, first) = binary_search(&step, &wins, lo_0, hi_0);
+    let (_, first) = search::search(&search::binary, &wins, lo_0, hi_0);
     let last = t.div(2) + t.div_ceil(2) - first;
     last - first + 1
 }

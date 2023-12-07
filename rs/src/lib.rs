@@ -4,8 +4,8 @@
 #[macro_use]
 extern crate aoc_runner_derive;
 
-mod binary_search;
 mod grid;
+mod search;
 
 mod day_01;
 mod day_02;
