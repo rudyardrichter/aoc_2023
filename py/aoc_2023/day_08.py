@@ -1,5 +1,4 @@
 import math
-from dataclasses import dataclass
 
 from aocd import get_data
 
@@ -15,37 +14,38 @@ def parse_line(l):
     return (start, l, r)
 
 
-def preprocess_1(data):
+def preprocess(data):
     rl, paths = data.split("\n\n")
     paths = [parse_line(p) for p in paths.split("\n") if p]
     paths = {start: (l, r) for (start, l, r) in paths}
     return rl, paths
 
 
-def preprocess_2(data):
-    return preprocess_1(data)
-
-
-def part_1(data):
-    return f(*data)
-
-
-def f(rl, paths, start="AAA", end: str | None = "ZZZ"):
+def f(
+    rl: str,
+    paths: dict[str, tuple[str, str]],
+    start: str = "AAA",
+    part_2: bool = False,
+):
     result = 0
     current = start
     while True:
         r_or_l = rl[result % len(rl)]
         current = paths[current][0] if r_or_l == "L" else paths[current][1]
         result += 1
-        if (end and current == "ZZZ") or (not end and current.endswith("Z")):
+        if (not part_2 and current == "ZZZ") or (part_2 and current.endswith("Z")):
             break
     return result
+
+
+def part_1(data):
+    return f(*data)
 
 
 def part_2(data):
     rl, paths = data
     starts = [p for p in paths.keys() if p.endswith("A")]
-    return math.lcm(*[f(rl, paths, start=s, end=None) for s in starts])
+    return math.lcm(*[f(rl, paths, start=s, part_2=True) for s in starts])
 
 
 test = """\
@@ -82,13 +82,13 @@ XXX = (XXX, XXX)
 """
 
 
-t = part_1(preprocess_1(test))
+t = part_1(preprocess(test))
 assert t == 2, t
-t = part_1(preprocess_1(test_2))
+t = part_1(preprocess(test_2))
 assert t == 6, t
-t = part_2(preprocess_1(test_2))
+t = part_2(preprocess(test_2))
 assert t == 6, t
-t = part_2(preprocess_1(test_3))
+t = part_2(preprocess(test_3))
 assert t == 6, t
 
 
@@ -96,13 +96,13 @@ def main():
     data = get_data(day=DAY, year=YEAR)
     print("----------------------------------------")
     print()
-    print("test 1: ", part_1(preprocess_1(test)))
-    print("ANSWER 1: ", part_1(preprocess_1(data)))
+    print("test 1: ", part_1(preprocess(test)))
+    print("ANSWER 1: ", part_1(preprocess(data)))
     print()
     print("----------------------------------------")
     print()
-    print("test 2: ", part_2(preprocess_2(test)))
-    print("ANSWER 2: ", part_2(preprocess_2(data)))
+    print("test 2: ", part_2(preprocess(test)))
+    print("ANSWER 2: ", part_2(preprocess(data)))
     print()
     print("----------------------------------------")
 
