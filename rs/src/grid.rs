@@ -36,6 +36,7 @@ impl<T, Idx: SliceIndex<[T]>> IndexMut<Idx> for Grid<T> {
     }
 }
 
+#[allow(dead_code)]
 impl<T> Grid<T> {
     pub fn rows(&self) -> impl Iterator<Item = &[T]> {
         self.items.chunks(self.w)
@@ -75,14 +76,11 @@ impl<T> Grid<T> {
     pub fn get(&self, i: usize) -> Option<&T> {
         self.items.get(i)
     }
-}
 
-#[allow(dead_code)]
-impl<T: Clone> Grid<T> {
-    pub fn neighbors_diagonal(&self, i: usize) -> Vec<(usize, T)> {
+    pub fn neighbors_diagonal(&self, i: usize) -> Vec<&T> {
         self.neighbor_ixs_diagonal(i)
             .into_iter()
-            .map(move |j| (j, self.items[j].clone()))
+            .map(move |j| &self.items[j])
             .collect::<Vec<_>>()
     }
 
@@ -101,6 +99,21 @@ impl<T: Clone> Grid<T> {
             result.push(i + self.w + 1); // ↘
         }
         result
+    }
+
+    pub fn neighbor_ixs_all(&self, i: usize) -> Vec<usize> {
+        self.neighbor_ixs(i)
+            .into_iter()
+            .chain(self.neighbor_ixs_diagonal(i))
+            .collect::<Vec<_>>()
+    }
+
+    pub fn neighbors_all(&self, i: usize) -> Vec<&T> {
+        self.neighbor_ixs(i)
+            .into_iter()
+            .chain(self.neighbor_ixs_diagonal(i))
+            .map(move |j| &self.items[j])
+            .collect::<Vec<_>>()
     }
 }
 
