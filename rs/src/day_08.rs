@@ -96,15 +96,16 @@ pub fn part_2(input: &Input) -> u64 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    const INPUT: &str = include_str!("../test_data/day_08.txt");
+    const INPUT_1: &str = include_str!("../test_data/day_08.txt");
+    const INPUT_2: &str = include_str!("../test_data/day_08_2.txt");
 
     #[test]
     fn test_part_1() {
-        assert_eq!(part_1(&get_input(INPUT)), 2);
+        assert_eq!(part_1(&get_input(INPUT_1)), 2);
     }
 
     #[test]
     fn test_part_2() {
-        assert_eq!(part_2(&get_input(INPUT)), 1);
+        assert_eq!(part_2(&get_input(INPUT_2)), 6);
     }
 }
