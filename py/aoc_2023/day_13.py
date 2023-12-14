@@ -18,8 +18,7 @@ def preprocess(data):
 def reflects_over(grid: np.ndarray, smudges: int = 0):
     for i in range(1, grid.shape[1]):
         left = grid[:, :i]
-        right = grid[:, i:]
-        right = right[:, : left.shape[1]]
+        right = grid[:, i : left.shape[1] + i]
         left = left[:, -right.shape[1] :]
         assert left.shape == right.shape
         right = np.flip(right, axis=1)
@@ -68,7 +67,6 @@ test = """\
 #####.##.
 ..##..###
 #....#..#
-
 """
 
 
